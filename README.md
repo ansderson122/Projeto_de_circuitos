@@ -6,70 +6,64 @@ Consiste em um jogo em que os jogadores têm que adivinhar um número secreto. P
 
 
 
-![Imagem do Jogo](/img/8.png)
+# Funcionamento 
+
+## Cromometro
+
+Antes de iniciar a falar sobre o cronômetro, é necessário explicar dois circuitos que foram usados no cronômetro, que são o "cronômetro somador" e o "cronômetro modificado".
+
+### modificado cronometro
+
+O cronômetro modificado recebe um número de 4 bits e pode subtrair 1 ou somar 1 quando ativado.
+
+![Texto alternativo](./img/modificado_cronometro.png)
+
+### somado cronometro
+
+Recebe 2 números de 4 bits que são do cronômetro. Para o primeiro, a restrição é que ele deve ficar entre 0 e 9, e toda vez que chegar a zero, ele subtrairá um do próximo. O segundo número deve ficar restrito entre 0 e 5 e só diminuirá quando o primeiro número chegar a zero. Se a pausa estiver ativada, a subtração não é realizada.
+
+![Texto alternativo](./img/Somador_cronometro_v4.2.png)
+### cronometro 8bits
 
 
-## Funcionamento 
+São dois registradores de 4 bits e o "cronômetro somador".
 
-### Display 
+![Texto alternativo](./img/cronometro_8bits.png)
 
-Para ativar o display de 7 segmentos, foram criados 7 chips, cada um com o seu mapa de Karnaugh. A tabela abaixo mostra como foi feito para o primeiro segmento.
-
-| AB / CD | 00 | 01 | 11 | 10 |
-| --------| - | - | - | - |
-| 00 | 1 | 1 | 0 | 1 
-| 01 | 1 | 0 | 1 | 1
-|11 | 1 | 1 | 0 | 0 
-| 10 | 1 | 0 | 0 | 1
-
-A partir disso, foi gerada a seguinte equação:
-
-$\overline{AB}$ + $\overline{ACD}$ + ${CD}$$\overline{A}$ + ${AD}$$\overline{C}$ + $\overline{BD}$
-
-E o circuito foi implementado da seguinte forma:
+### cronometro 16 bits
 
 
-![Texto alternativo](/img/1.png)
+São dois cronômetros de 8 bits, que representam os minutos e segundos..
+
+![Texto alternativo](./img/cronometro_16bits.png)
+
+### cronometro 
+São dois cronômetros de 16 bits, um para o jogador A e outro para o jogador B. Também definem o tempo inicial de 15 minutos.
+
+![Texto alternativo](./img/cronometro.png)
+
+### placa 
+
+É um registrador de 4 bits que soma 1 toda vez que for acionado.
+
+![Texto alternativo](./img/placa.png)
+
+### Adição 
+
+Soma dois números levando em consideração o sinal, que é representado pelo primeiro bit.
 
 
-Esse processo foi repetido para todos os segmentos, resultando no display final:
+![Texto alternativo](./img/adicao.png)
+
+### operação maior 
+
+Soma os dois números e compara com o número oculto para verificar se é maior, menor ou igual.
+
+![Texto alternativo](./img/operacao.png)
+
+### jogo 
+
+Junta todos os componentes para gerar o jogo.
 
 
-![Texto alternativo](/img/2.png)
-
-### As operações 
-
-Devido ao tamanho do mapa de Karnaugh ser grande para esse problema, pesquisei na internet e encontrei este [video](https://www.youtube.com/watch?v=wgje9eH3TT0&t=1032s). Isso me permitiu simplificar o circuito.
-
-O circuito do vídeo original era:
-
-
-![Texto alternativo](/img/3.png)
-
-
-E foi simplificado para:
-
-
-![Texto alternativo](/img/4.png)
-
-Os circuitos dos valores menores foram removidos, pois se o valor não é igual nem maior, então ele deve ser menor.
-
-### MUX 
-
-O multiplexador de 1 bit foi ensinado em sala de aula:
-
-
-![Texto alternativo](/img/5.png)
-
-
-E o de 4 bits
-
-
-![Texto alternativo](/img/6.png)
-
-### Multiplexador
-
-O multiplexador é a junção de vários circuitos:
-
-
-![Texto alternativo](/img/7.png)
+![Texto alternativo](./img/jogo.png)
